@@ -1,9 +1,9 @@
 <div class="container-fluid">
     <div class="card mb-3">
 
-        <!-- Header  -->
+        <!-- Header  --> 
         <div class="card-header">
-            <h3><i class="fas fa-user"></i>&nbsp;&nbsp;Personas</h3>
+            <h3><i class="fas fa-users"></i>&nbsp;&nbsp;Personas</h3>
             <button style="float: right;" (click)="openModalPersona()" type="button" class="btn btn-info btn-sm"> Agregar Persona <i class="fas fa-id-card"></i>
             </button>
         </div>
@@ -31,7 +31,7 @@
 
                         <td>
                             <div>
-                                <button (click)="updatePersona(persona)" type="button" class="btn btn-primary">Editar <i class="fas fa-edit"></i></button>
+                                <button (click)="openEditaModalPersona(persona)" type="button" class="btn btn-primary">Editar <i class="fas fa-edit"></i></button>
                                 &nbsp;&nbsp;
                                 <button (click)="deletePersona(persona.id)" type="button" class="btn btn-danger">Eliminar <i class="fas fa-trash"></i></button>
                             </div>
@@ -59,6 +59,73 @@
                     <div class="form-group">
                         <label for="nombre">Nombre<span class="text-danger">*</span></label>
                         <input type="text" formControlName="nombre" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }">
+                        <div *ngIf="submitted && f.nombre.errors" class="invalid-feedback">
+                            <div *ngIf="f.nombre.errors.required">El nombre de la persona es obligatorio</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="apellidos">Apellidos<span class="text-danger">*</span></label>
+                        <input type="text" formControlName="apellidos" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.apellidos.errors }" />
+                        <div *ngIf="submitted && f.apellidos.errors" class="invalid-feedback">
+                        <div *ngIf="f.apellidos.errors.required">Los apellidos de la persona son obligatorios</div>
+                        </div>
+                    </div>
+            
+                    <div class="form-group">
+                    <label for="fecha_nacimiento">Fecha de nacimiento<span class="text-danger">*</span></label>
+                    <input type="date" formControlName="fecha_nacimiento" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.fecha_nacimiento.errors }" />
+                    <div *ngIf="submitted && f.fecha_nacimiento.errors" class="invalid-feedback">
+                        <div *ngIf="f.fecha_nacimiento.errors.required">La fecha de nacimiento de la persona es obligatorio</div>
+                    </div>
+                </div>
+            
+                    <div class="form-group">
+                        <label for="domicilio">Domicilio<span class="text-danger">*</span></label>
+                        <textarea rows="3" formControlName="domicilio" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.domicilio.errors }"></textarea>
+                        <div *ngIf="submitted && f.domicilio.errors" class="invalid-feedback">
+                        <div *ngIf="f.domicilio.errors.required">El domicilio de la persona es obligatorio</div>
+                        </div>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="rfc">RFC<span class="text-danger">*</span></label>
+                        <input type="text" formControlName="rfc" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.rfc.errors }" />
+                        <div *ngIf="submitted && f.rfc.errors" class="invalid-feedback">
+                        <div *ngIf="f.rfc.errors.required">El RFC de la persona es obligatorio</div>
+                        </div>
+                    </div>
+
+                    <p class="text-right"><span class="text-danger">*</span> Campos requeridos</p>
+                    <div>
+                        <button class="btn btn-success btn-block">Guardar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        
+        </div>
+    </div>
+</div>
+
+
+<div class="modal" id="personaEditaModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Agregar Persona</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <form [formGroup]="personaForm" (ngSubmit)="updatePersona()">
+                    <div class="form-group">
+                        <label for="nombre">Nombre<span class="text-danger">*</span></label>
+                        <input type="text" value="hola" formControlName="nombre" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }">
                         <div *ngIf="submitted && f.nombre.errors" class="invalid-feedback">
                             <div *ngIf="f.nombre.errors.required">El nombre de la persona es obligatorio</div>
                         </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵɵstylePropInterpolate1 } from '@angular/core';
 
 import { Persona } from '../../_models/persona';
 import { PersonaService } from '../../_services/persona.service';
@@ -39,13 +39,15 @@ export class PersonaComponent implements OnInit {
   // Consultar lista de personas
   getPersonas(){
     this.personas = [];
-    this.personaService.getPersonas().subscribe(
+    this.personas = [ new Persona("1","Fernando","Bernal Martìnez","1997-08-10","Valle de Chalco","BEFEMA12345"),
+                      new Persona("2","Brenda","Bedolla Villasenor","1997-09710","CDMX","BEBVMA12345")];
+    
+    /*this.personaService.getPersonas().subscribe(
       res => {
         this.personas = res;
-        console.log(this.personas)
-      },
+        console.log(this.personas)      },
       err => console.error(err)
-    )
+    )*/
   }
 
   // Consultar una persona
@@ -89,12 +91,15 @@ export class PersonaComponent implements OnInit {
 
   // Actualizar una persona
   updatePersona(){
+    
     this.submitted = true;
 
     if(this.personaForm.invalid){
       console.log('Formulario inválido');
       return;
     }
+    console.log("Invocando al UPDATE, nueva Data")
+    console.log(this.personaForm.value)
 
     this.personaService.updatePersona(this.personaForm.value).subscribe(
       res => {
@@ -109,5 +114,17 @@ export class PersonaComponent implements OnInit {
   openModalPersona(){
     this.personaForm.reset();
     $("#personaModal").modal("show");
+  }
+
+  openEditaModalPersona(persona:Persona){
+    this.personaForm = this.formBuilder.group({
+      id: [persona.id],
+      nombre: [persona.nombre, Validators.required],
+      apellidos: [persona.apellidos, Validators.required],
+      fecha_nacimiento: [persona.fecha_nacimiento, Validators.required],
+      domicilio: [persona.domicilio, Validators.required],
+      rfc: [persona.rfc, Validators.required]
+    });
+    $("#personaEditaModal").modal("show");
   }
 }
